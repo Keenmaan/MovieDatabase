@@ -8,3 +8,5 @@ target
 /RUNNING_PID
 test/ApplicationTest.java
 test/IntegrationTest.java
+data/db.mv.db
+data/db.trace.db
