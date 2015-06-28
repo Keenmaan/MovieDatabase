@@ -6,3 +6,5 @@ target
 /.project
 /.settings
 /RUNNING_PID
+test/ApplicationTest.java
+test/IntegrationTest.java
