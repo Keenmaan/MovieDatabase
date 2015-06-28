@@ -1,0 +1,12 @@
+@(movie : models.Movie)(genres : List[models.Genre])(description : String)
+
+@main("Movie Database: Movie Description") {
+    <ul><b>MOVIE DESCRIPTION</b>
+        <li>Title: @movie.title</li>
+        <li>Avg. vote score: @movie.vote_average</li>
+        <li>Genres: @for(p<-genres){
+            @p.name,
+        } </li>
+        <li>Plot: @description</li>
+    </ul>
+}

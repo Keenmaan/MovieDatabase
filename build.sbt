@@ -15,6 +15,11 @@ libraryDependencies ++= Seq(
   evolutions
 )
 
+libraryDependencies += "commons-io" % "commons-io" % "2.4"
+
+libraryDependencies += "com.google.code.gson" % "gson" % "2.3.1"
+
+
 // Play provides two styles of routers, one expects its actions to be injected, the
 // other, legacy style, accesses its actions statically.
 routesGenerator := InjectedRoutesGenerator
