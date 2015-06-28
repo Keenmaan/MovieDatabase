@@ -1,0 +1,27 @@
+
+        MOVIE DATABASE APPLICATION
+
+ '/'
+
+    Top 20 movies scorted by average vote score. At least 50 votes required to be taken into account.
+
+ '/topGenre'
+
+    Displays a pie chart presenting a percentage of various genre representation in the movie database.
+
+ '/search'
+
+    Allows for a search through the movie database. You may choose up to two parameters:
+    1. Movie genre, 2. Minimum average vote value.
+
+ '/movie/:id'
+
+    This page displays specific data regarding a chosen movie:
+    - title
+    - average vote score
+    - genres that the film is representing
+    - description of the movie, downloaded through OMDB API (http://www.omdbapi.com)
+
+Technologies used:
+    Java 8 (1.8.0.40)
+    Play Framework 2.4.1
