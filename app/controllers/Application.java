@@ -14,6 +14,7 @@ import views.html.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -47,7 +48,19 @@ public class Application extends Controller {
     }
 
     public Result index() {
-        return ok(index.render(models.Movie.find.all()));
+        return ok(index.render(getMovieList(20,200)));
+    }
+
+    public static List<models.Movie> getMovieList(int numberOfMovies, int minimumVotes){
+
+        List<models.Movie> movies=models.Movie.find.all();
+        movies=models.Movie.find.where()
+                .ge("vote_count", minimumVotes)
+                .orderBy("vote_average desc, release_date")
+                .setMaxRows(numberOfMovies)
+                .findList();
+
+        return movies;
     }
 
     public static String getDescription(int id){

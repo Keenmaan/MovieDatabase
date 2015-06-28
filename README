@@ -3,7 +3,7 @@
 
  '/'
 
-    Top 20 movies scorted by average vote score. At least 50 votes required to be taken into account.
+    Top 20 movies scorted by average vote score. At least 200 votes required to be taken into account.
 
  '/topGenre'
 
