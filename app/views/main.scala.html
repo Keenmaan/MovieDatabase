@@ -1,7 +1,10 @@
 @(title: String)(content: Html)
 
 @header(title)
-
-    @content
-
+    <div class="container">
+        @navbar()
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 jumbotron">
+            @content
+        </div>
+    </div>
 @footer()
