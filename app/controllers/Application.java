@@ -2,6 +2,7 @@ package controllers;
 
 import com.google.gson.Gson;
 import models.Genre;
+import models.Movie;
 import models.MovieGenre;
 import org.apache.commons.io.IOUtils;
 import play.*;
@@ -24,11 +25,17 @@ import java.util.Properties;
 public class Application extends Controller {
 
     public Result topGenreView() {
-        return Results.TODO;
+        List<Integer> counts = new ArrayList<>();
+        List<Genre> genres = Genre.find.all();
+        for(Genre genre : genres) {
+            counts.add(MovieGenre.find.where().eq("genre_id", genre.id).findRowCount());
+        }
+
+        return ok(topGenre.render(genres, counts));
     }
 
     public Result searchView() {
-        return Results.TODO;
+        return ok(search.render(models.Genre.find.all()));
     }
 
     public Result movieDescriptionView(int id) {

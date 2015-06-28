@@ -1,0 +1,24 @@
+@(genres : List[models.Genre])
+
+@main("Movie Database: Top Genre") {
+    <form>
+    <div>
+    <label>Genre: </label>
+    @for(p<-genres){
+        <div type="checkbox" style="float:left; margin-right : 25px;">
+            <label>
+                <input type="checkbox" name="checkBox@p.name">
+                @p.name
+            </label>
+        </div>
+    }
+    </div>
+    <div>
+        <label>Minimum vote score: </label>
+        <input type="text" name="minVoteScore">
+    </div>
+    <div>
+        <input type="submit" name="Search">
+    </div>
+    </form>
+}

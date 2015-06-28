@@ -1,5 +1,24 @@
-@(values : List[models.Genre])
+@(values : List[models.Genre])(counts : List[Integer])
 
 @main("Movie Database: Top Genre") {
 
+    <div id="pie-chart-legend" style="float:left; width:200px">
+        <ul style="float:left; margin-right : 5px; list-style-type: none">@for(x <- counts) {
+            <li class="counts">@x</li>
+        }
+        </ul>
+        <ul style="list-style-type: none">@for(x <- values) {
+            <li class="genres">
+                <span style="background-color:black; float: left"></span>@x.name</li>
+        }
+        </ul>
+    </div>
+
+    <div id="canvas-holder">
+        <canvas id="chart-area" width="300" height="300"/>
+    </div>
+
+    <script>
+        window.onload = loadPieChart();
+    </script>
 }
