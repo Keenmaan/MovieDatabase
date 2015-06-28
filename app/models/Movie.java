@@ -23,4 +23,6 @@ public class Movie extends Model{
     public BigDecimal vote_average;
 
     public int vote_count;
+
+    public static Finder<String,Movie> find = new Finder<>(Movie.class);
 }

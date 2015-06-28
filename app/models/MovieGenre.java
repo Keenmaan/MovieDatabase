@@ -13,4 +13,6 @@ public class MovieGenre extends Model {
     public int movie_id;
 
     public int genre_id;
+
+    public static Finder<String,MovieGenre> find = new Finder<>(MovieGenre.class);
 }

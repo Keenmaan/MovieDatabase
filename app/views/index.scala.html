@@ -1,6 +1,26 @@
-@()
+@(values : List[models.Movie])
 
 @main("Movie Database") {
-
-
+    <div class="container">
+        <div class="panel panel-default">
+            <table class="table table-bordered table-hover table-responsive">
+                <thead class="panel-heading bg-primary">
+                    <tr>
+                        <th>Title:</th>
+                        <th>Avg. vote:</th>
+                        <th>Description:</th>
+                    </tr>
+                </thead>
+                <tbody class="panel-body">
+                @for(p<-values){
+                    <tr>
+                        <td>@p.title</td>
+                        <td>@p.vote_average</td>
+                        <td><a href="/movie/@p.id">OMDB</a></td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
 }
