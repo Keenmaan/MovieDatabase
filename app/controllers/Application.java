@@ -6,13 +6,10 @@ import models.Movie;
 import models.MovieGenre;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
-import play.*;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.*;
 
-import scala.util.parsing.json.JSONObject;
-import scala.util.parsing.json.JSONObject$;
 import views.html.*;
 
 import java.io.IOException;
@@ -36,7 +33,6 @@ public class Application extends Controller {
     }
 
     public Result searchView() {
-        System.out.println("searchVIEW");
         return ok(search.render(models.Genre.find.all(), null));
     }
 
@@ -52,10 +48,9 @@ public class Application extends Controller {
             minVoteScore=new BigDecimal(requestData.get("minVoteScore"));
 
         for (Genre genre : genres) {
-            System.out.println("genre.id=" + genre.id);
-            System.out.println(genre.name);
 
             if(genre.name != null
+                    && requestData!=null
                     && requestData.get(genre.name) != null
                     && requestData.get(genre.name).equals("on")
                     && requestData.get("minVoteScore")!=null) {
@@ -69,12 +64,6 @@ public class Application extends Controller {
                         .collect(Collectors.toList()));
             }
         }
-        for (Movie movie : collection){
-            if (movie!=null && movie.title!=null)
-            System.out.println(movie.title);
-        }
-        System.out.println("searchRESULTS");
-        //System.out.println(tags);
         List<Movie> movies= new ArrayList<>();
         movies.addAll(collection);
         return ok(search.apply(models.Genre.find.all(),movies));
@@ -116,8 +105,6 @@ public class Application extends Controller {
         models.Movie movie=models.Movie.find.where().eq("id",id).findUnique();
         String description=null;
         if (movie!=null) {
-            Logger.info("movie works. " + movie.title);
-
             String title="";
             try {
                 title = "t=" + URLEncoder.encode(movie.title, "UTF-8");

@@ -1,20 +1,25 @@
 @(movie : models.Movie)(genres : List[models.Genre])(description : String)
 
 @main("Movie Database: Movie Description") {
-    <h2>Movie Description:
-        <small>
-    <dl class="dl-horizontal">
-        <dt>Title:</dt>
-        <dd>@movie.title</dd>
-        <dt>Avg. vote score: </dt>
-        <dd>@movie.vote_average</dd>
-        <dt>Genres:  </dt>
-        <dd>@for(p<-genres){
-            @p.name,
-        }</dd>
-        <dt>Plot: </dt>
-        <dd>@description</dd>
-    </dl>
-        </small>
-    </h2>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h2 class="panel-title">Movie Description: </h2>
+        </div>
+        <div class="panel-body">
+            <h2>@movie.title<br><br>
+                <small>
+                    <dl class="dl-horizontal">
+                        <dt>Avg. vote score: </dt>
+                        <dd>@movie.vote_average</dd>
+                        <dt>Genre: </dt>
+                        <dd>@for(p<-genres){
+                            @p.name,
+                        }</dd>
+                        <dt>Plot: </dt>
+                        <dd>@description</dd>
+                    </dl>
+                </small>
+            </h2>
+        </div>
+    </div>
 }
