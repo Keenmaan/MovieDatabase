@@ -14,8 +14,8 @@
                 <tbody class="panel-body">
                 @for(p<-values){
                     <tr>
-                        <td>@p.title        @p.release_date</td>
-                        <td>@p.vote_average @p.vote_count</td>
+                        <td>@p.title</td>
+                        <td>@p.vote_average</td>
                         <td><a href="/movie/@p.id">OMDB</a></td>
                     </tr>
                 }

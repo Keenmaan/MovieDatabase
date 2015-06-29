@@ -5,7 +5,10 @@ import models.Genre;
 import models.Movie;
 import models.MovieGenre;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import play.*;
+import play.data.DynamicForm;
+import play.data.Form;
 import play.mvc.*;
 
 import scala.util.parsing.json.JSONObject;
@@ -18,9 +21,8 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Application extends Controller {
 
@@ -30,12 +32,52 @@ public class Application extends Controller {
         for(Genre genre : genres) {
             counts.add(MovieGenre.find.where().eq("genre_id", genre.id).findRowCount());
         }
-
         return ok(topGenre.render(genres, counts));
     }
 
     public Result searchView() {
-        return ok(search.render(models.Genre.find.all()));
+        System.out.println("searchVIEW");
+        return ok(search.render(models.Genre.find.all(), null));
+    }
+
+    public Result searchResults() {
+        DynamicForm requestData = Form.form().bindFromRequest();
+        List<MovieGenre> movieGenres;
+        Collection<Movie> collection=new HashSet();
+        List<Genre> genres = Genre.find.all();
+        BigDecimal minVoteScore;
+        if (requestData==null || !StringUtils.isNumeric(requestData.get("minVoteScore")))
+            minVoteScore= BigDecimal.valueOf(0);
+        else
+            minVoteScore=new BigDecimal(requestData.get("minVoteScore"));
+
+        for (Genre genre : genres) {
+            System.out.println("genre.id=" + genre.id);
+            System.out.println(genre.name);
+
+            if(genre.name != null
+                    && requestData.get(genre.name) != null
+                    && requestData.get(genre.name).equals("on")
+                    && requestData.get("minVoteScore")!=null) {
+                movieGenres = MovieGenre.find.where().eq("genre_id", genre.id).findList();
+                collection.addAll(movieGenres.stream()
+                        .map(movieGenre -> Movie.find.where()
+                                .eq("id", movieGenre.movie_id)
+                                .where()
+                                .ge("vote_average",minVoteScore)
+                                .findUnique())
+                        .collect(Collectors.toList()));
+            }
+        }
+        for (Movie movie : collection){
+            if (movie!=null && movie.title!=null)
+            System.out.println(movie.title);
+        }
+        System.out.println("searchRESULTS");
+        //System.out.println(tags);
+        List<Movie> movies= new ArrayList<>();
+        movies.addAll(collection);
+        return ok(search.apply(models.Genre.find.all(),movies));
     }
 
     public Result movieDescriptionView(int id) {

@@ -10,6 +10,8 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 
 GET        /topGenre            controllers.Application.topGenreView()
 
+POST       /search            controllers.Application.searchResults()
+
 GET        /search              controllers.Application.searchView()
 
 GET        /movie/:id           controllers.Application.movieDescriptionView(id : Integer)

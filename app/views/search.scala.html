@@ -1,24 +1,55 @@
-@(genres : List[models.Genre])
+@(genres : List[models.Genre])(movies : List[models.Movie])
 
 @main("Movie Database: Top Genre") {
-    <form>
+    <form method="post" class="form-inline" role="search">
+    <div class="form-group row">
+        <div class="col-md-3">
+    <div class = "form-group">
+        <label>Minimum vote score:
+        <input type="number" step="0.01" class="form-control input-sm" placeholder="score" name="minVoteScore">
+        </label>
+    </div>
     <div>
-    <label>Genre: </label>
-    @for(p<-genres){
-        <div type="checkbox" style="float:left; margin-right : 25px;">
-            <label>
-                <input type="checkbox" name="checkBox@p.name">
-                @p.name
-            </label>
+        <button class="btn btn-default" type="submit">Search</button>
+    </div>
         </div>
-    }
-    </div>
-    <div>
-        <label>Minimum vote score: </label>
-        <input type="text" name="minVoteScore">
-    </div>
-    <div>
-        <input type="submit" name="Search">
+        <div class="col-md-9">
+            <label>Genre: </label>
+            <br>
+            @for(p<-genres){
+                <div class="checkbox">
+                    <label>
+                        <input class="form-control" type="checkbox" name="@p.name"> @p.name
+                    </label>
+                </div>
+            }
+        </div>
     </div>
     </form>
+    <br>
+    @if(movies!=null){
+        <div class="container">
+            <div class="panel panel-default">
+                <table class="table table-bordered table-hover table-responsive">
+                    <thead class="panel-heading bg-primary">
+                        <tr>
+                            <th>Title:</th>
+                            <th>Avg. vote:</th>
+                            <th>Description:</th>
+                        </tr>
+                    </thead>
+                    <tbody class="panel-body">
+                    @for(p<-movies){
+                        @if(p!=null && p.title!=null && p.vote_average!=null){
+                            <tr>
+                                <td>@p.title</td>
+                                <td>@p.vote_average</td>
+                                <td><a href="/movie/@p.id">OMDB</a></td>
+                            </tr>
+                        }
+                    }
+                    </tbody>
+                </table>
+            </div>
+    }
 }
